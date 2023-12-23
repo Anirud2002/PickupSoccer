@@ -1,0 +1,11 @@
+.status-btn{
+    position: fixed;
+    bottom: 20px;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+ion-content {
+    --padding-bottom: 100px;
+}

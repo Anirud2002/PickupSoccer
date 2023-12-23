@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      What's your status?
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="hideModal()">Dismiss</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">What's your status?</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list [inset]="true">
+    <ion-list-header class="ion-margin-vertical">
+      What are you doing?
+    </ion-list-header>
+
+    <ion-item>
+      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
+      <ion-input aria-label="Task name" value="Training"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
+      <ion-input aria-label="Task name" value="Watching"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [inset]="true">
+    <ion-list-header class="ion-margin-vertical">
+      What's your availability?
+    </ion-list-header>
+
+    <ion-item>
+      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
+      <ion-input aria-label="Task name" value="Playing on my own or with group"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
+      <ion-input aria-label="Task name" value="Free to Pick up"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [inset]="true">
+    <ion-list-header class="ion-margin-vertical">
+      When will you leave?
+    </ion-list-header>
+
+    <ion-datetime presentation="time"></ion-datetime>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer class="ion-padding">
+  <ion-button expand="block">
+    Update
+  </ion-button>
+</ion-footer>
