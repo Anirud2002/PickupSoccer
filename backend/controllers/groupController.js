@@ -8,19 +8,19 @@ const mongoose = require("mongoose");
 const Group = mongoose.model("Group");
 const User = mongoose.model("User");
 
-router.post("/add", async (req, res) => {
-    const newGroup = new Group;
+router.post("/create", async (req, res) => {
+    const newGroup = new Group();
 
     newGroup.groupId = uuidv4();
     newGroup.groupName = req.body.groupName;
     newGroup.inviteLink = "https://google.com";
     newGroup.admins = [{userName: req.user.userName}];
+    // admin will be by default the player in the group
+    newGroup.players.push({userName: req.user.userName});
 
-    const q = await newGroup.save();
+    await newGroup.save();
 
-    console.log(q);
-
-    res.send("New Group Created!");
+    res.json(newGroup);
 })
 
 router.delete("/delete/:groupId", async (req, res) => {
@@ -88,10 +88,10 @@ router.get("/:groupId/players", async (req, res) => {
         return res.status(404).json({ message: "No group found!" });
     }
 
-    res.status(200).json({players: group.players});
+    res.status(200).json(group.players);
 })
 
-router.post("/:groupId/check-out", async (req, res) => {
+router.post("/:groupId/check-in", async (req, res) => {
     const group = await Group.findOne({ groupId: req.params.groupId });
 
     if (!group) {
@@ -110,7 +110,7 @@ router.post("/:groupId/check-out", async (req, res) => {
     // Save the updated group
     await group.save();
 
-    return res.status(200).json({ message: "Player checked in successfully", group });
+    return res.status(200).json(playerToUpdate);
 })
 
 router.post("/:groupId/check-out", async (req, res) => {
@@ -123,7 +123,7 @@ router.post("/:groupId/check-out", async (req, res) => {
     // Find the player with the username "andy"
     const playerToUpdate = group.players.find(player => player.userName === req.user.userName);
     if (!playerToUpdate) {
-        return res.status(404).json({ message: `Player ${req.user.userName} not found in the group!` });
+        return res.status(200).json(playerToUpdate);
     }
 
     // Update the checkedIn property
@@ -153,7 +153,7 @@ router.get("/:groupId/check-in-status", async (req, res) => {
         return res.status(404).json({ message: `Player ${req.user.userName} not found in the group!` });
     }
 
-    return res.status(200).json({ checkedIn: player.checkedIn });
+    return res.status(200).json(player.checkedIn);
 })
 
 router.post("/:groupId/update-status", async (req, res) => {
@@ -179,7 +179,7 @@ router.post("/:groupId/update-status", async (req, res) => {
 
     await group.save();
 
-    return res.status(200).json({players: group.players});
+    return res.status(200).json(group.players);
 })
 
 module.exports = router;

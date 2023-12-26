@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Register</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-content class="ion-no-padding">
+      <form [formGroup]="registerForm">
+        <ion-list>
+          <ion-item class="ion-no-padding">
+            <ion-input type="input" formControlName="userName" label="Username*" labelPlacement="floating"></ion-input>
+          </ion-item>
+          <ion-item class="ion-no-padding">
+            <ion-input type="input" formControlName="userName" label="Password*" labelPlacement="floating"></ion-input>
+          </ion-item>
+          <ion-item class="ion-no-padding">
+            <ion-input type="input" formControlName="firstName" label="Firstname" labelPlacement="floating"></ion-input>
+          </ion-item>
+          <ion-item class="ion-no-padding">
+            <ion-input type="input" formControlName="lastName" label="Lastname" labelPlacement="floating"></ion-input>
+          </ion-item>
+          <ion-item class="ion-no-padding">
+            <ion-input *ngIf="!contactInfo" type="number" formControlName="contactNumber" label="Phn Number*" labelPlacement="floating"></ion-input>
+            <ion-input *ngIf="contactInfo" type="input" formControlName="email" label="Email*" labelPlacement="floating"></ion-input>
+            <ion-button slot="end" fill="clear" (click)="toggleContactInfo()">
+              <ion-icon name="swap-horizontal"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </form>
+
+      <ion-button expand="block" (click)="register()">Register</ion-button>
+      <div class="ion-text-center">
+        <ion-text>Already have an account? Log in</ion-text>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
     
     await newUser.save();
 
-    res.send("New User Created!");
+    return res.status(200).json({message: "User Created!"});
 });
 
 router.post("/login", async (req, res) => {
@@ -37,17 +37,15 @@ router.post("/login", async (req, res) => {
     })
 
     if(!user) {
-        res.send("No such user!").status(500);
-        return;
+        return res.send("No such user!").status(500);
     }
 
     const passwordMatched = await bcrypt.compare(req.body.password, user.passwordHash);
     if(!passwordMatched) {
-        res.send("Invalid credentials!").status(500);
-        return;
+        return res.send("Invalid credentials!").status(500);
     }
 
-    res.send({
+    res.status(200).json({
         userName: user.userName,
         firstName: user.firstName,
         lastName: user.lastName,
