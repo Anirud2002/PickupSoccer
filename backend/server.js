@@ -1,5 +1,6 @@
 require("./models/db");
 const express = require('express');
+const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
 const app = express();
@@ -11,6 +12,8 @@ app.use(bodyParser.json())
 
 const groupController = require("./controllers/groupController");
 const userController = require("./controllers/userController");
+
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("Hello World!");

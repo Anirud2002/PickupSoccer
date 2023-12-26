@@ -36,6 +36,7 @@ export class RegisterPage implements OnInit {
   }
 
   async register() {
+    console.log(this.registerForm.invalid);
     if(this.registerForm.invalid) {
       console.log("Form invalid!");
       return;

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { catchError, lastValueFrom, of } from 'rxjs';
-import { Register } from './auth.modal';
+import { Login, Register } from './auth.modal';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class AuthService {
   ) { }
 
   async register(register: Register) {
-    const apiCall = this.http.post(`${this.baseApiUrl}/user/register`, {register})
+    const apiCall = this.http.post(`${this.baseApiUrl}/user/register`, register)
     .pipe(
       catchError(err => {
         console.log(err);
@@ -41,6 +41,26 @@ export class AuthService {
 
     // navigate to login page
     this.router.navigateByUrl("/login")
+    return response;
+  }
+
+  async login(login: Login) {
+    const apiCall = this.http.post(`${this.baseApiUrl}/user/login`, login)
+    .pipe(
+      catchError(err => {
+        console.log(err);
+        return of(null);
+      })
+    );
+
+    const response = await lastValueFrom(apiCall);
+
+    if(!response) {
+      // TODO: Handle the error
+      return null;
+    }
+    
+    console.log(response);
     return response;
   }
 }

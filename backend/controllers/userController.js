@@ -12,6 +12,7 @@ const User = mongoose.model("User");
 
 router.post("/register", async (req, res) => {
     const newUser = new User;
+    console.log(req.body);
 
     newUser.userId = uuidv4();
     newUser.userName = req.body.userName;
@@ -19,6 +20,7 @@ router.post("/register", async (req, res) => {
     newUser.lastName = req.body.lastName;
     newUser.contactNumber = req.body.contactNumber;
     newUser.email = req.body.email;
+
 
     // hashing and salting the password
     const salt = await bcrypt.genSalt(10);
