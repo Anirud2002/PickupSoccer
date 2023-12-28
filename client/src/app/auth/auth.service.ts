@@ -83,7 +83,11 @@ export class AuthService {
     this.userSubject.next(user);
   }
 
-  async getToken(): Promise<string> {
-    return (await Preferences.get({key: "token"})).value;
+  async getUser(): Promise<User> {
+    return JSON.parse((await Preferences.get({key: "user"})).value);
+  }
+
+  async isAuthenticated(): Promise<boolean> {
+    return (await this.getUser()) !== null;
   }
 }
