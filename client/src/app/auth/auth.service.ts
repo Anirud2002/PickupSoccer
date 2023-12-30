@@ -87,7 +87,14 @@ export class AuthService {
     return JSON.parse((await Preferences.get({key: "user"})).value);
   }
 
-  async isAuthenticated(): Promise<boolean> {
-    return (await this.getUser()) !== null;
+  async isAuthenticated(): Promise<boolean>{
+    let user = await this.getUser();
+    if(!user){
+      return false;
+    }
+
+    this.userSubject.next(user); // hacky way, might need a better solution in future
+
+    return true;
   }
 }

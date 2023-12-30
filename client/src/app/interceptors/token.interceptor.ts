@@ -24,17 +24,18 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let currentUser: User;
     this.authService.user$.pipe(take(1)).subscribe(user => currentUser = user);
-
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
-    const authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${currentUser.token}`
-      }
-    });
+    if(currentUser) {
+      req= req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${currentUser.token}`
+        }
+      });
+    }
 
     // send cloned request with header to the next handler.
-    return next.handle(authReq).pipe(
+    return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         switch(error.status){
           case 401: // unauthorized
