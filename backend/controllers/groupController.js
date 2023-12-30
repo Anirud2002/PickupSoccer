@@ -8,6 +8,18 @@ const mongoose = require("mongoose");
 const Group = mongoose.model("Group");
 const User = mongoose.model("User");
 
+router.get("/get-user-groups", async (req, res) => {
+    const user = await User.findOne({userName: req.user.userName});
+
+    let groups = [];
+    user.groupIds.forEach(async id => {
+        const group = await Group.findOne({ groupId: id});
+        groups.push(group);
+    });
+
+    res.status(200).json(groups);
+})
+
 router.post("/create", async (req, res) => {
     const newGroup = new Group();
 

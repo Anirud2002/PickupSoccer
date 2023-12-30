@@ -15,22 +15,18 @@ const userController = require("./controllers/userController");
 
 app.use(cors());
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
-
 // Middleware to check the validity of JWT token
 const checkTokenValidity = (req, res, next) => {
     // Get the token from the request header
     const authHeader = req.headers['authorization'];
 
+    console.log(req.headers);
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized: Token not provided' });
     }
   
     // Split the header to get the token part
     const tokenParts = authHeader.split(' ');
-  
     if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
       return res.status(401).json({ message: 'Unauthorized: Invalid token format' });
     }
