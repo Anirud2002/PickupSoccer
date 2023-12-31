@@ -137,8 +137,8 @@ export class GroupService {
     return response;
   }
 
-  async checkIn(groupId: string) : Promise<void> {
-    const apiCall = this.http.get(`${this.baseApiUrl}/group/${groupId}/check-in`)
+  async checkIn(groupId: string) : Promise<any> {
+    const apiCall = this.http.post(`${this.baseApiUrl}/group/${groupId}/check-in`, {})
     .pipe(
       catchError(err => {
         console.log(err);
@@ -150,7 +150,7 @@ export class GroupService {
 
     if(!response) {
       // TODO: Handle the error
-      return;
+      return null;
     }
 
     const toast = await this.toastController.create({
@@ -159,7 +159,7 @@ export class GroupService {
       message: "You are checked in!"
     });
     await toast.present();
-    return;
+    return response;
   }
 
   async checkOut(groupId: string) : Promise<void> {

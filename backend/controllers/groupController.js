@@ -30,15 +30,15 @@ router.post("/create", async (req, res) => {
     newGroup.groupName = req.body.groupName;
     newGroup.inviteLink = "https://google.com";
     newGroup.admins = [{userName: req.user.userName}];
-    // admin will be by default the player in the group
-    newGroup.players.push({userName: req.user.userName});
-
+    
     
     const user = await User.findOne({userName: req.user.userName});
     if(!user) {
         return res.status(401).json({message: "User not found!"});
     }
-
+    
+    // admin will be by default the player in the group
+    newGroup.players.push({userName: req.user.userName, contactNumber: user.contactNumber, email: user.email});
     user.groupIds.push(newGroup.groupId);
     
     await newGroup.save();
@@ -71,13 +71,14 @@ router.post("/add-user", async (req, res) => {
         return res.status(404).json({ message: "No group found!" });
     }
 
-    // Using push to add players to the players array
-    group.players.push({userName: req.user.userName});
     await group.save();
-
+    
     // add this groupId into User schema as well
     const user = await User.findOne({userName: req.user.userName});
     user.groupIds.push(req.body.groupId);
+
+    // Using push to add players to the players array
+    group.players.push({userName: req.user.userName, contactNumber: user.contactNumber, email: user.email});
 
     await user.save();
 

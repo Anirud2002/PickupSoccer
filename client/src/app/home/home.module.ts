@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { CheckedInPipe } from '../group/pipes/checked-in.pipe';
 
 
 @NgModule({
@@ -16,6 +17,6 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, CheckedInPipe]
 })
 export class HomePageModule {}

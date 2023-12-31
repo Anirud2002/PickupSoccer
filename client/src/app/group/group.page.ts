@@ -37,6 +37,15 @@ export class GroupPage implements OnInit {
     this.group = await this.groupService.getGroupDetail(this.groupId).finally(() => this.requestCompleted = true);
   }
 
+  async handleCheckIn() {
+    await this.groupService.checkIn(this.groupId).then(res => {
+      if(res) {
+        this.getGroupDetails();
+        this.presentStatusComponent();
+      }
+    })
+  }
+
   async presentActionSheet() {
     const actionSheet = await this.actionController.create({
       buttons: [

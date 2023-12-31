@@ -18,6 +18,8 @@ let PlayerStatusSchema = new Schema({
 let PlayerSchema = new Schema({
     userName: {type: String, required: true},
     checkedIn: {type: Boolean, default: false},
+    contactNumber: {type: String},
+    email: {type: String},
     status: PlayerStatusSchema
 });
 

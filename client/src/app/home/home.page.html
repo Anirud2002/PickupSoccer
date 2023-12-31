@@ -27,6 +27,7 @@
 
       <ion-label>
         <h2>{{group.groupName}}</h2>
+        <p>{{(group.players | checkedIn : true).length}} CheckedIn Players</p>
       </ion-label>
 
       <ion-button slot="end" fill="clear" id="click-trigger">
