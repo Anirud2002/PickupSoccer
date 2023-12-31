@@ -39,7 +39,7 @@ router.post("/login", async (req, res) => {
     })
 
     if(!user) {
-        return res.send("No such user!").status(500);
+        return res.status(404).json({message: "User not found!"});
     }
 
     const passwordMatched = await bcrypt.compare(req.body.password, user.passwordHash);
@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
         return res.send("Invalid credentials!").status(500);
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         userName: user.userName,
         firstName: user.firstName,
         lastName: user.lastName,

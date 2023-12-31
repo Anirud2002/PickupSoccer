@@ -20,7 +20,6 @@ const checkTokenValidity = (req, res, next) => {
     // Get the token from the request header
     const authHeader = req.headers['authorization'];
 
-    console.log(req.headers);
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized: Token not provided' });
     }

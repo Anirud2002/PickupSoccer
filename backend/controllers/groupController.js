@@ -10,14 +10,17 @@ const User = mongoose.model("User");
 
 router.get("/get-user-groups", async (req, res) => {
     const user = await User.findOne({userName: req.user.userName});
-
+    if(!user) {
+        return res.status(401).json({message: "User not found!"});
+    }
     let groups = [];
-    user.groupIds.forEach(async id => {
-        const group = await Group.findOne({ groupId: id});
-        groups.push(group);
-    });
+    
+    for(let i = 0; i < user.groupIds.length; i++) {
+        const group = await Group.findOne({ groupId: user.groupIds[i]});
+        groups.push(group);    
+    }
 
-    res.status(200).json(groups);
+    return res.status(200).json(groups);
 })
 
 router.post("/create", async (req, res) => {
