@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
+import { ModalController } from '@ionic/angular';
+import { CreateGroupComponent } from '../shared/components/create-group/create-group.component';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +11,8 @@ import { HomeService } from './home.service';
 export class HomePage implements OnInit {
 
   constructor(
-    private homeService: HomeService
+    private homeService: HomeService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit(): void {
@@ -20,5 +23,13 @@ export class HomePage implements OnInit {
     const groups = await this.homeService.getUserGroups();
 
     console.log(groups);
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: CreateGroupComponent
+    });
+
+    await modal.present();
   }
 }
