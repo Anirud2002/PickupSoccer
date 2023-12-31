@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { PlayerStatusComponent } from './components/player-status/player-status.component';
+import { ActivatedRoute } from '@angular/router';
+import { __param } from 'tslib';
+import { Group } from './interfaces/group.moda';
+import { GroupService } from './services/group.service';
 
 @Component({
   selector: 'app-group',
@@ -8,14 +12,29 @@ import { PlayerStatusComponent } from './components/player-status/player-status.
   styleUrls: ['./group.page.scss'],
 })
 export class GroupPage implements OnInit {
-
+  requestCompleted: boolean = false;
+  groupId: string;
+  group: Group = {} as Group;
   constructor(
     private actionController: ActionSheetController,
     private modalController: ModalController,
-    private outlet: IonRouterOutlet
+    private outlet: IonRouterOutlet,
+    private groupService: GroupService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.getGroupIdFromRouteParam();
+    this.getGroupDetails();
+  }
+
+  getGroupIdFromRouteParam() {
+    this.groupId = this.activatedRoute.snapshot.params["groupId"];
+  }
+
+  async getGroupDetails() {
+    this.requestCompleted = false;
+    this.group = await this.groupService.getGroupDetail(this.groupId).finally(() => this.requestCompleted = true);
   }
 
   async presentActionSheet() {

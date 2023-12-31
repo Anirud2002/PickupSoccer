@@ -118,8 +118,8 @@ export class GroupService {
     return response;
   }
 
-  async getAllPlayers(groupId: string) : Promise<Player[]> {
-    const apiCall = this.http.get<Player[]>(`${this.baseApiUrl}/group/${groupId}/players`)
+  async getGroupDetail(groupId: string) : Promise<Group> {
+    const apiCall = this.http.get<Group>(`${this.baseApiUrl}/group/${groupId}`)
     .pipe(
       catchError(err => {
         console.log(err);
@@ -131,7 +131,7 @@ export class GroupService {
 
     if(!response) {
       // TODO: Handle the error
-      return [];
+      return null;
     }
 
     return response;

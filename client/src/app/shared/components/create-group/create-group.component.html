@@ -16,14 +16,14 @@
       <ion-title size="large">Create Group</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-list [inset]="true">
+  <ion-list [inset]="true" [formGroup]="groupFormGroup">
     <ion-item>
       <ion-label position="floating">Group Name</ion-label>
-      <ion-input type="input"></ion-input>
+      <ion-input type="input" formControlName="groupName"></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block">Create</ion-button>
+  <ion-button expand="block" (click)="handleCreate()">Create</ion-button>
 </ion-footer>

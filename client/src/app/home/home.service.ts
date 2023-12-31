@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, lastValueFrom, of } from 'rxjs';
+import { Group } from '../group/interfaces/group.moda';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class HomeService {
   ) { }
 
   async getUserGroups() {
-    const apiCall = this.http.get(`${this.baseApiUrl}/group/get-user-groups`).pipe(
+    const apiCall = this.http.get<Group[]>(`${this.baseApiUrl}/group/get-user-groups`).pipe(
       catchError(err => {
         console.log(err);
         return of(null);

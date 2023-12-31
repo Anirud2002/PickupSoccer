@@ -14,7 +14,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'group',
+    path: 'group/:groupId',
     loadChildren: () => import('./group/group.module').then( m => m.GroupPageModule),
     canLoad: [AuthGuard]
   },

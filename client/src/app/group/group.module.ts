@@ -8,6 +8,7 @@ import { GroupPageRoutingModule } from './group-routing.module';
 
 import { GroupPage } from './group.page';
 import { PlayerStatusComponent } from './components/player-status/player-status.component';
+import { CheckedInPipe } from './pipes/checked-in.pipe';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { PlayerStatusComponent } from './components/player-status/player-status.
     IonicModule,
     GroupPageRoutingModule,
   ],
-  declarations: [GroupPage, PlayerStatusComponent]
+  declarations: [GroupPage, PlayerStatusComponent, CheckedInPipe]
 })
 export class GroupPageModule {}

@@ -33,9 +33,17 @@ router.post("/create", async (req, res) => {
     // admin will be by default the player in the group
     newGroup.players.push({userName: req.user.userName});
 
-    await newGroup.save();
+    
+    const user = await User.findOne({userName: req.user.userName});
+    if(!user) {
+        return res.status(401).json({message: "User not found!"});
+    }
 
-    res.json(newGroup);
+    user.groupIds.push(newGroup.groupId);
+    
+    await newGroup.save();
+    await user.save();
+    return res.status(200).json(newGroup);
 })
 
 router.delete("/delete/:groupId", async (req, res) => {
@@ -96,14 +104,14 @@ router.post("/remove-user", async (req, res) => {
     return res.status(200).json({ message: "Players added successfully", group });
 })
 
-router.get("/:groupId/players", async (req, res) => {
+router.get("/:groupId", async (req, res) => {
     const group = await Group.findOne({ groupId: req.params.groupId });
 
     if (!group) {
         return res.status(404).json({ message: "No group found!" });
     }
 
-    res.status(200).json(group.players);
+    res.status(200).json(group);
 })
 
 router.post("/:groupId/check-in", async (req, res) => {

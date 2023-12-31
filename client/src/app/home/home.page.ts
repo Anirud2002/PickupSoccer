@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { ModalController } from '@ionic/angular';
 import { CreateGroupComponent } from '../shared/components/create-group/create-group.component';
+import { Group } from '../group/interfaces/group.moda';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { CreateGroupComponent } from '../shared/components/create-group/create-g
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-
+  groups: Group[] = [];
   constructor(
     private homeService: HomeService,
     private modalController: ModalController
@@ -20,9 +21,7 @@ export class HomePage implements OnInit {
   }
 
   async getUserGroups() {
-    const groups = await this.homeService.getUserGroups();
-
-    console.log(groups);
+    this.groups = await this.homeService.getUserGroups();
   }
 
   async openModal() {
@@ -31,5 +30,9 @@ export class HomePage implements OnInit {
     });
 
     await modal.present();
+
+    const {data:group} = await modal.onDidDismiss();
+
+    this.groups.push(group);
   }
 }
