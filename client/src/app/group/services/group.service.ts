@@ -162,8 +162,8 @@ export class GroupService {
     return response;
   }
 
-  async checkOut(groupId: string) : Promise<void> {
-    const apiCall = this.http.get(`${this.baseApiUrl}/group/${groupId}/check-out`)
+  async checkOut(groupId: string) : Promise<any> {
+    const apiCall = this.http.post(`${this.baseApiUrl}/group/${groupId}/check-out`, {})
     .pipe(
       catchError(err => {
         console.log(err);
@@ -184,7 +184,7 @@ export class GroupService {
       message: "You are checked out!"
     });
     await toast.present();
-    return;
+    return response;
   }
 
   async getCheckInStatus(groupId: string) : Promise<boolean> {

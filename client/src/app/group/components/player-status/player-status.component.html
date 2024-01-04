@@ -17,48 +17,48 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list [inset]="true">
+  <ion-list [inset]="true" [formGroup]="statusFormGroup">
     <ion-list-header class="ion-margin-vertical">
       What are you doing?
     </ion-list-header>
 
-    <ion-item>
-      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
-      <ion-input aria-label="Task name" value="Training"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
-      <ion-input aria-label="Task name" value="Watching"></ion-input>
-    </ion-item>
+    <ion-radio-group formControlName="isTraining">
+      <ion-item>
+        <ion-radio [value]="true" justify="space-between">Training</ion-radio>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-radio [value]="false" justify="space-between">Nothing</ion-radio>
+      </ion-item>
+    </ion-radio-group>
   </ion-list>
 
-  <ion-list [inset]="true">
+  <ion-list [inset]="true" [formGroup]="statusFormGroup">
     <ion-list-header class="ion-margin-vertical">
       What's your availability?
     </ion-list-header>
 
-    <ion-item>
-      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
-      <ion-input aria-label="Task name" value="Playing on my own or with group"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-checkbox slot="end" aria-label="Toggle task completion"></ion-checkbox>
-      <ion-input aria-label="Task name" value="Free to Pick up"></ion-input>
-    </ion-item>
+    <ion-radio-group formControlName="isAvailable">
+      <ion-item>
+        <ion-radio [value]="true" justify="space-between">Free for Pick up</ion-radio>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-radio [value]="false" justify="space-between">Not Free for Pick up</ion-radio>
+      </ion-item>
+    </ion-radio-group>
   </ion-list>
 
-  <ion-list [inset]="true">
+  <ion-list [inset]="true" [formGroup]="statusFormGroup">
     <ion-list-header class="ion-margin-vertical">
       When will you leave?
     </ion-list-header>
 
-    <ion-datetime presentation="time"></ion-datetime>
+    <ion-datetime presentation="time" formControlName="leavingAt"></ion-datetime>
   </ion-list>
 
 </ion-content>
 
 <ion-footer class="ion-padding">
-  <ion-button expand="block">
+  <ion-button expand="block" (click)="updateStatus()">
     Update
   </ion-button>
 </ion-footer>

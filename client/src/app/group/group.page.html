@@ -39,7 +39,7 @@
           CheckedIn Players
         </ion-item-divider>
 
-        <ion-item (click)="presentActionSheet()" *ngFor="let player of group.players | checkedIn : true">
+        <ion-item (click)="presentActionSheet(player)" *ngFor="let player of group.players | checkedIn : true">
           <ion-avatar aria-hidden="true" slot="start">
             <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
           </ion-avatar>
@@ -75,8 +75,11 @@
         </ion-item>
       </ion-list>
 
-      <ion-button expand="block" class="status-btn" (click)="handleCheckIn()">
+      <ion-button *ngIf="!checkedIn" expand="block" class="status-btn" (click)="handleCheckIn()">
         CheckIn
+      </ion-button>
+      <ion-button *ngIf="checkedIn" expand="block" color="danger" class="status-btn" (click)="handleCheckOut()">
+        CheckOut
       </ion-button>
 
   </div>

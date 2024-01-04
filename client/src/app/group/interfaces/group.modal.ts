@@ -8,6 +8,8 @@ export interface Player {
     userName: string;
     checkedIn: boolean;
     status: PlayerStatus;
+    contactNumber: string;
+    email: string;
 }
 
 export interface Admin {

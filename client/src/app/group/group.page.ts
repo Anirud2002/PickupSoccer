@@ -3,7 +3,7 @@ import { ActionSheetController, IonRouterOutlet, ModalController } from '@ionic/
 import { PlayerStatusComponent } from './components/player-status/player-status.component';
 import { ActivatedRoute } from '@angular/router';
 import { __param } from 'tslib';
-import { Group } from './interfaces/group.modal';
+import { Group, Player } from './interfaces/group.modal';
 import { GroupService } from './services/group.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class GroupPage implements OnInit {
   requestCompleted: boolean = false;
   groupId: string;
   group: Group = {} as Group;
+  checkedIn: boolean;
   constructor(
     private actionController: ActionSheetController,
     private modalController: ModalController,
@@ -25,11 +26,16 @@ export class GroupPage implements OnInit {
 
   async ngOnInit() {
     this.getGroupIdFromRouteParam();
-    this.getGroupDetails();
+    await this.getGroupDetails();
+    await this.getCheckInStatus();
   }
 
   getGroupIdFromRouteParam() {
     this.groupId = this.activatedRoute.snapshot.params["groupId"];
+  }
+
+  async getCheckInStatus() {
+    this.checkedIn = await this.groupService.getCheckInStatus(this.groupId);
   }
 
   async getGroupDetails() {
@@ -38,6 +44,7 @@ export class GroupPage implements OnInit {
   }
 
   async handleCheckIn() {
+    this.checkedIn = !this.checkedIn;
     await this.groupService.checkIn(this.groupId).then(res => {
       if(res) {
         this.getGroupDetails();
@@ -46,11 +53,20 @@ export class GroupPage implements OnInit {
     })
   }
 
-  async presentActionSheet() {
+  async handleCheckOut() {
+    this.checkedIn = !this.checkedIn;
+    await this.groupService.checkOut(this.groupId).then(res => {
+      if(res) {
+        this.getGroupDetails();
+      }
+    })
+  }
+
+  async presentActionSheet(player: Player) {
     const actionSheet = await this.actionController.create({
       buttons: [
         {
-          text: 'Call +1 9868953234',
+          text: player.contactNumber ?? player.email,
           handler: () => {
             console.log("Calling my friend!");
           }
