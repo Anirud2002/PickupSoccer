@@ -1,6 +1,6 @@
  import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Group, Player, PlayerStatus } from '../interfaces/group.moda';
+import { Group, Player, PlayerStatus } from '../interfaces/group.modal';
 import { catchError, lastValueFrom, of } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 

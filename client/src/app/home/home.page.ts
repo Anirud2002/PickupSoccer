@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { ModalController } from '@ionic/angular';
 import { CreateGroupComponent } from '../shared/components/create-group/create-group.component';
-import { Group } from '../group/interfaces/group.moda';
+import { Group } from '../group/interfaces/group.modal';
 
 @Component({
   selector: 'app-home',

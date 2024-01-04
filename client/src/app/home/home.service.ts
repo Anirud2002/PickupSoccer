@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, lastValueFrom, of } from 'rxjs';
-import { Group } from '../group/interfaces/group.moda';
+import { Group } from '../group/interfaces/group.modal';
 
 @Injectable({
   providedIn: 'root'

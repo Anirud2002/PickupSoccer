@@ -3,7 +3,7 @@ import { ActionSheetController, IonRouterOutlet, ModalController } from '@ionic/
 import { PlayerStatusComponent } from './components/player-status/player-status.component';
 import { ActivatedRoute } from '@angular/router';
 import { __param } from 'tslib';
-import { Group } from './interfaces/group.moda';
+import { Group } from './interfaces/group.modal';
 import { GroupService } from './services/group.service';
 
 @Component({

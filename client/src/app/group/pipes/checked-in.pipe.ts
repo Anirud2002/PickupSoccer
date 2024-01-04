@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Player } from '../interfaces/group.moda';
+import { Player } from '../interfaces/group.modal';
 
 @Pipe({
   name: 'checkedIn'
@@ -7,13 +7,7 @@ import { Player } from '../interfaces/group.moda';
 export class CheckedInPipe implements PipeTransform {
 
   transform(players: Player[], checkedIn: boolean): Player[] {
-    let retVal: Player[] = [];
-    players.forEach(player => {
-      if(player.checkedIn === checkedIn) {
-        retVal.push(player);
-      }
-    })
-    return retVal;
+    return players.filter(player => player.checkedIn === checkedIn);
   }
 
 }
