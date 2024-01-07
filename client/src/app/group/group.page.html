@@ -35,7 +35,7 @@
             <h2>{{player.userName}}</h2>
             <p>{{player.status.isTraining ? 'Training' : 'Not Training'}} | 
             {{player.status.isAvailable ? 'Free for Pick up' : 'Can\'t play pick up'}} | 
-            {{player.status.leavingAt ? ('till' + player.status.leavingAt | date : "shortTime") :"NA"}}</p>
+            {{player.status.leavingAt ? ('till ' + (player.status.leavingAt | date : "shortTime")) :"NA"}}</p>
           </ion-label>
           <ion-buttons slot="end">
             <ion-button color="success">

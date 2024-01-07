@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { GroupService } from '../../services/group.service';
+import { PlayerStatus } from '../../interfaces/group.modal';
 
 @Component({
   selector: 'app-player-status',
@@ -10,6 +11,7 @@ import { GroupService } from '../../services/group.service';
 })
 export class PlayerStatusComponent  implements OnInit {
   @Input() groupId: string;
+  @Input() status: PlayerStatus;
   statusFormGroup: FormGroup;
   constructor(
     private modalController: ModalController,
@@ -26,7 +28,15 @@ export class PlayerStatusComponent  implements OnInit {
       isTraining: [true],
       isAvailable: [true],
       leavingAt: [""]
-    })
+    });
+
+    if(this.status) {
+      this.statusFormGroup.patchValue({
+        isTraining: this.status.isTraining,
+        isAvailable: this.status.isAvailable,
+        leavingAt: this.status.leavingAt,
+      });
+    }
   }
 
   async updateStatus() {
