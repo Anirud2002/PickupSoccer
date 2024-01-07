@@ -3,8 +3,10 @@ import { ActionSheetController, IonRouterOutlet, ModalController } from '@ionic/
 import { PlayerStatusComponent } from './components/player-status/player-status.component';
 import { ActivatedRoute } from '@angular/router';
 import { __param } from 'tslib';
-import { Group, Player } from './interfaces/group.modal';
+import { Group, Player, PlayerStatus } from './interfaces/group.modal';
 import { GroupService } from './services/group.service';
+import { User } from '../auth/auth.modal';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-group',
@@ -16,18 +18,25 @@ export class GroupPage implements OnInit {
   groupId: string;
   group: Group = {} as Group;
   checkedIn: boolean;
+  user: User;
   constructor(
     private actionController: ActionSheetController,
     private modalController: ModalController,
     private outlet: IonRouterOutlet,
     private groupService: GroupService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   async ngOnInit() {
     this.getGroupIdFromRouteParam();
+    await this.getUser();
     await this.getGroupDetails();
     await this.getCheckInStatus();
+  }
+
+  async getUser() {
+    this.user = await this.authService.getUser();
   }
 
   getGroupIdFromRouteParam() {
@@ -84,10 +93,11 @@ export class GroupPage implements OnInit {
     await actionSheet.present();
   }
 
-  async presentStatusComponent() {
+  async presentStatusComponent(status: PlayerStatus = null) {
     const modal = await this.modalController.create({
       component: PlayerStatusComponent,
       componentProps: {
+        status,
         groupId: this.groupId
       },
       presentingElement: this.outlet.nativeEl
@@ -100,8 +110,17 @@ export class GroupPage implements OnInit {
     if(data) {
       this.group.players = data;
     }
+  }
 
-    console.log(data);
+  async handlePlayerClick(player: Player) {
+    const isUser = player.userName === this.user.userName;
+    if(isUser && player.checkedIn) {
+      await this.presentStatusComponent(player.status);
+      return;
+    }
+
+    // if someone else
+    await this.presentActionSheet(player);
   }
 
 }

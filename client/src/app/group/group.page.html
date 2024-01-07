@@ -27,7 +27,7 @@
           CheckedIn Players
         </ion-item-divider>
 
-        <ion-item (click)="presentActionSheet(player)" *ngFor="let player of group.players | checkedIn : true">
+        <ion-item (click)="handlePlayerClick(player)" *ngFor="let player of group.players | checkedIn : true">
           <ion-avatar aria-hidden="true" slot="start">
             <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
           </ion-avatar>
