@@ -20,15 +20,15 @@ let PlayerSchema = new Schema({
     checkedIn: {type: Boolean, default: false},
     contactNumber: {type: String},
     email: {type: String},
-    status: PlayerStatusSchema
+    status: {type:PlayerStatusSchema, default: () => {}}
 });
 
 let GroupSchema = new Schema({
     groupId: {type: String, required: true},
     groupName: {type: String, required: true},
     inviteLink: {type: String,required: true},
-    players: {type: [PlayerSchema]},
-    announcements: {type: [AnnouncementSchema]},
+    players: {type: [PlayerSchema], default: () => []},
+    announcements: {type: [AnnouncementSchema], default: () => []},
     admins: {type: [AdminSchema], required: true}
 })
 

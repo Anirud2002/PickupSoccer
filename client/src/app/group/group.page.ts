@@ -87,10 +87,21 @@ export class GroupPage implements OnInit {
   async presentStatusComponent() {
     const modal = await this.modalController.create({
       component: PlayerStatusComponent,
+      componentProps: {
+        groupId: this.groupId
+      },
       presentingElement: this.outlet.nativeEl
     });
 
     await modal.present();
+
+    const {data} = await modal.onDidDismiss();
+
+    if(data) {
+      this.group.players = data;
+    }
+
+    console.log(data);
   }
 
 }

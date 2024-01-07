@@ -206,7 +206,7 @@ export class GroupService {
   }
 
   async updatePlayerStatus(groupId: string, status: PlayerStatus) : Promise<Player[]> {
-    const apiCall = this.http.post<Player[]>(`${this.baseApiUrl}/group/${groupId}/update-status`, {status})
+    const apiCall = this.http.post<Player[]>(`${this.baseApiUrl}/group/${groupId}/update-status`, status)
     .pipe(
       catchError(err => {
         console.log(err);

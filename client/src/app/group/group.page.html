@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      {{group.groupName}}
-    </ion-title>
+
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/home'" text="Group"></ion-back-button>
     </ion-buttons>
@@ -20,22 +18,12 @@
 
 <ion-content [fullscreen]="true">
   <div *ngIf="requestCompleted">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">{{group.groupName}}</ion-title>
-        <ion-buttons slot="end" [collapse]="true">
-          <ion-button>
-            <ion-icon name="person-add"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+      <div class="ion-padding-horizontal">
+        <h2>{{group.groupName}}</h2>
+      </div>
 
-      <ion-list class="ion-margin-vertical">
-        <ion-item-divider class="ion-margin-vertical">
+      <ion-list class="ion-margin-bottom ion-no-padding">
+        <ion-item-divider>
           CheckedIn Players
         </ion-item-divider>
 
@@ -45,18 +33,20 @@
           </ion-avatar>
           <ion-label class="ion-text-wrap">
             <h2>{{player.userName}}</h2>
-            <p>Training | Free for Pick up | till 5:45pm</p>
+            <p>{{player.status.isTraining ? 'Training' : 'Not Training'}} | 
+            {{player.status.isAvailable ? 'Free for Pick up' : 'Can\'t play pick up'}} | 
+            {{player.status.leavingAt ? ('till' + player.status.leavingAt | date : "shortTime") :"NA"}}</p>
           </ion-label>
           <ion-buttons slot="end">
             <ion-button color="success">
-              <ion-icon name="ellipse"></ion-icon>
+              <ion-icon name="ellipse" [color]="player.status.isAvailable ? 'primary' : 'danger'"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-item>
       </ion-list>
 
       <ion-list class="ion-margin-vertical">
-        <ion-item-divider class="ion-margin-vertical">
+        <ion-item-divider>
           Inactive Players
         </ion-item-divider>
 

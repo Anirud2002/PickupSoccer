@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { GroupService } from '../../services/group.service';
 
 @Component({
   selector: 'app-player-status',
@@ -8,10 +9,12 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./player-status.component.scss'],
 })
 export class PlayerStatusComponent  implements OnInit {
+  @Input() groupId: string;
   statusFormGroup: FormGroup;
   constructor(
     private modalController: ModalController,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private groupService: GroupService
   ) { }
 
   ngOnInit() {
@@ -20,18 +23,16 @@ export class PlayerStatusComponent  implements OnInit {
 
   initForm() {
     this.statusFormGroup = this.fb.group({
-      isTraining: [false],
-      isAvailable: [false],
+      isTraining: [true],
+      isAvailable: [true],
       leavingAt: [""]
     })
   }
 
-  async hideModal() {
-    await this.modalController.dismiss();
-  }
-
   async updateStatus() {
-    console.log(this.statusFormGroup.value);
+    let response = await this.groupService.updatePlayerStatus(this.groupId, this.statusFormGroup.value);
+
+    await this.modalController.dismiss(response);
   }
 
 }

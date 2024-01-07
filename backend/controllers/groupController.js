@@ -197,6 +197,10 @@ router.post("/:groupId/update-status", async (req, res) => {
         return res.status(500).json({ message: "First Check In!" });
     }
 
+    if(!player.status) {
+        player.status = {};
+    }
+
     player.status.isTraining = req.body.isTraining;
     player.status.isAvailable = req.body.isAvailable;
     player.status.leavingAt = req.body.leavingAt;
