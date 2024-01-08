@@ -9,9 +9,19 @@
       <ion-button>
         <ion-icon name="person-add"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button id="click-trigger">
         <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
       </ion-button>
+      <ion-popover trigger="click-trigger" triggerAction="click">
+        <ng-template>
+          <ion-list>
+            <ion-item [button]="true" lines="none" (click)="handleRemoveUser()">
+              <ion-icon color="danger" slot="start" name="skull"></ion-icon>
+              <ion-label>Leave Group</ion-label>
+            </ion-item>
+          </ion-list>
+        </ng-template>
+      </ion-popover>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

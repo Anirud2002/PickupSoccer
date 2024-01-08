@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, IonRouterOutlet, ModalController } from '@ionic/angular';
+import { ActionSheetController, AlertController, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { PlayerStatusComponent } from './components/player-status/player-status.component';
 import { ActivatedRoute } from '@angular/router';
 import { __param } from 'tslib';
@@ -22,6 +22,7 @@ export class GroupPage implements OnInit {
   constructor(
     private actionController: ActionSheetController,
     private modalController: ModalController,
+    private alertController: AlertController,
     private outlet: IonRouterOutlet,
     private groupService: GroupService,
     private activatedRoute: ActivatedRoute,
@@ -121,6 +122,24 @@ export class GroupPage implements OnInit {
 
     // if someone else
     await this.presentActionSheet(player);
+  }
+
+  async handleRemoveUser() {
+    const alert = await this.alertController.create({
+      header: "Are you sure?",
+      buttons: [
+        {
+          text: "No",
+          role: 'cancel'
+        },
+        {
+          text: "Yes",
+          handler: async () => {
+            await this.groupService.removeUserFromGroup(this.groupId);
+          }
+        }
+      ]
+    })
   }
 
 }

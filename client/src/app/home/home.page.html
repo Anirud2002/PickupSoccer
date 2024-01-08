@@ -20,8 +20,8 @@
   </ion-header>
 
   <ion-list class="ion-margin-vertical">
-    <div class="flex justify-between items-center">
-      <ion-item *ngFor="let group of groups" button [detail]="false" [routerLink]="'/group/' + group.groupId" class="w-full">
+    <div *ngFor="let group of groups" class="flex justify-between items-center">
+      <ion-item button [detail]="false" [routerLink]="'/group/' + group.groupId" class="w-full">
         <ion-thumbnail slot="start">
           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
         </ion-thumbnail>

@@ -32,7 +32,8 @@ export class HomePage implements OnInit {
     await modal.present();
 
     const {data:group} = await modal.onDidDismiss();
-
-    this.groups.push(group);
+    if(group) {
+      this.groups.push(group);
+    }
   }
 }
